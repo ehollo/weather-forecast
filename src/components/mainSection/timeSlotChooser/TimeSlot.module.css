@@ -1,0 +1,17 @@
+.item {
+  list-style: none;
+  width: 100%;
+  padding: 1rem;
+  background-color: #008793;
+  font-weight: bold;
+  color: beige;
+}
+
+.selected {
+  background-color: #01464d;
+  border-bottom: 1px solid beige;
+}
+
+/* .item:hover {
+  background-color: #03b4c5;
+} */

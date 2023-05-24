@@ -1,0 +1,20 @@
+body {
+  background-image: linear-gradient(
+    to bottom,
+    #051937,
+    #004d7a,
+    #008793,
+    #00bf72
+  );
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+
+.sections {
+  display: flex;
+  justify-content: space-around;
+}
