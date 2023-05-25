@@ -16,8 +16,14 @@ const MainSection = () => {
     error,
     fetchWeatherWrapper: sendRequest,
   } = useFetchWeather();
+  const [isRequestToSend, setRequestToSend] = React.useState(true);
   const { isLocationLoading, locationError, locationCallback } = useLocation();
   const [weatherData, setWeatherData] = React.useState(nullWeatherData);
+  React.useEffect(() => {
+    setInterval(() => {
+      setRequestToSend(true);
+    }, 600000);
+  }, []);
 
   React.useEffect(() => {
     const place = { current: true };
@@ -35,7 +41,12 @@ const MainSection = () => {
       setWeatherData(data);
     };
 
-    if (validateTimeSlot(timeSlot) && validateCoordinates(coordinates)) {
+    if (
+      validateTimeSlot(timeSlot) &&
+      validateCoordinates(coordinates) &&
+      isRequestToSend
+    ) {
+      setRequestToSend(false);
       sendRequest({ coordinates, isLocationLoading, handleData });
     }
   }, [coordinates, timeSlot, sendRequest]);
