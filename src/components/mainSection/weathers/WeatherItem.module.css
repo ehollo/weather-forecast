@@ -1,0 +1,8 @@
+.item {
+  list-style: none;
+  padding: 1rem;
+}
+
+.value {
+  font-weight: bold;
+}

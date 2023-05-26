@@ -1,25 +1,24 @@
 import * as React from "react";
 import classes from "./TimeSlotChooser.module.css";
-import TimeSlot from "./TimeSlot";
+import TimeSlotItem from "./TimeSlotItem";
+import { TIME_SLOTS } from "../../../data/TimeSlots";
 
 type TimeSlotChooserProps = {
   onClick(timeSlot: string): void;
 };
 
-export const TIME_SLOTS = ["Current", "Hourly", "Daily"];
-
 const TimeSlotChooser = ({ onClick }: TimeSlotChooserProps) => {
-  const [selectedItem, setSelecteditem] = React.useState(0);
+  const [selectedItem, setSelectedItem] = React.useState(0);
 
   const handleClick = (index: number) => {
-    setSelecteditem(index);
+    setSelectedItem(index);
     onClick(TIME_SLOTS[index]);
   };
 
   return (
     <ul className={classes.list}>
       {TIME_SLOTS.map((timeSlot, id) => (
-        <TimeSlot
+        <TimeSlotItem
           key={id}
           value={timeSlot}
           isSelected={selectedItem === id}

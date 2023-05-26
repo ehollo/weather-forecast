@@ -10,24 +10,24 @@ export type LocationCoords = {
   lon: number;
 };
 
-export type TempMetric = "Celsius" | "Farenheit";
+export type Units = "metric" | "imperial";
 
 export type WeatherContextType = {
   location: LocationData;
   coordinates: LocationCoords;
-  metric: TempMetric;
+  units: Units;
   setLocation(location: LocationData): void;
   setCoordinates(coordinates: LocationCoords): void;
-  setMetric(metric: TempMetric): void;
+  setUnits(units: Units): void;
 };
 
 const WeatherContext = React.createContext<WeatherContextType>({
   location: { city: "", country: "" },
   coordinates: { lat: 0, lon: 0 },
-  metric: "Celsius",
+  units: "metric",
   setLocation(location) {},
   setCoordinates(coordinates) {},
-  setMetric(metric) {},
+  setUnits(units) {},
 });
 
 export default WeatherContext;

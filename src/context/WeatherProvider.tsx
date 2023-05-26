@@ -1,21 +1,18 @@
 import * as React from "react";
-import WeatherContext, {
-  TempMetric,
-  WeatherContextType,
-} from "./WeatherContext";
+import WeatherContext, { Units, WeatherContextType } from "./WeatherContext";
 
 const WeatherProvider = ({ children }: { children: JSX.Element }) => {
   const [location, setLocation] = React.useState({ city: "", country: "" });
   const [coordinates, setCoordinates] = React.useState({ lat: 0, lon: 0 });
-  const [metric, setMetric] = React.useState("Celsius" as TempMetric);
+  const [units, setUnits] = React.useState("metric" as Units);
 
   const weatherContext: WeatherContextType = {
     location,
     coordinates,
-    metric,
+    units,
     setLocation,
     setCoordinates,
-    setMetric,
+    setUnits,
   };
   return (
     <WeatherContext.Provider value={weatherContext}>
