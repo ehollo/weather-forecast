@@ -26,25 +26,10 @@ export type Weather = {
   weather_main?: string;
   weather_description?: string;
   weather_icon?: string;
-
-  // weather?: {
-  //   id: string;
-  //   main: string;
-  //   description: string;
-  //   icon: string;
-  // } | null;
   rain?: string;
   snow?: string;
   sunrise?: string;
   sunset?: string;
   moonrise?: string;
   moonset?: string;
-};
-
-const nullWeather: Weather = {};
-
-export const nullWeatherData: WeatherData = {
-  current: {},
-  hourly: [],
-  daily: [],
 };

@@ -1,5 +1,6 @@
 import * as React from "react";
 import classes from "./TimeSlotItem.module.css";
+import useClassName from "../../../hooks/useClassName";
 
 type TimeSlotProps = {
   value: string;
@@ -14,7 +15,10 @@ const TimeSlotItem = ({ value, isSelected, onClick }: TimeSlotProps) => {
 
   const selectedClass = isSelected ? classes.selected : null;
   return (
-    <li className={`${classes.item} ${selectedClass}`} onClick={handleClick}>
+    <li
+      className={`${useClassName(classes.item, classes)} ${selectedClass}`}
+      onClick={handleClick}
+    >
       {value}
     </li>
   );

@@ -1,14 +1,16 @@
 import * as React from "react";
 import classes from "./CurrentLocationInfo.module.css";
-import WeatherContext from "../../context/WeatherContext";
+import useLocation from "../../hooks/useLocation";
+import useClassName from "../../hooks/useClassName";
 
 const CurrentLocationInfo = () => {
-  const { location } = React.useContext(WeatherContext);
-  const currentLocation =
-    location.city && location.city.length > 0
-      ? `${location.city}, ${location.country}`
-      : "";
-  return <div className={classes.info}>{currentLocation}</div>;
+  const { location } = useLocation();
+  const currentLocation = location?.city
+    ? `${location.city}, ${location.country}`
+    : "";
+  return (
+    <div className={useClassName(classes.info, classes)}>{currentLocation}</div>
+  );
 };
 
 export default CurrentLocationInfo;

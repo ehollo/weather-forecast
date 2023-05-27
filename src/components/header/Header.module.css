@@ -1,34 +1,28 @@
 .header {
-  display: grid;
-  grid-template-columns: 2fr 3fr 1fr 1fr;
-  gap: 3%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-logo {
-  grid-column: 1/4;
+.header.dark {
+  background-color: var(--main-bg-color-dark);
+  color: var(--main-color-dark);
 }
 
-location {
-  grid-column: 2/4;
+.header.light {
+  background-color: var(--main-bg-color-light);
+  color: var(--main-color-light);
 }
 
-metric {
-  grid-column: 3/4;
+.settings {
+  display: flex;
+  gap: 0.5rem;
 }
 
-colorMode {
-  grid-column: 4/4;
-}
-
-.logo,
-.colorMode,
-.metric {
-  padding: 1rem;
+.logo {
+  padding: 0.5rem;
   border: 0.25rem;
   border-radius: 0.25rem;
-  border-color: #004d7a;
   margin: 0.5rem;
-  background-color: #008793;
   font-weight: bold;
-  color: beige;
 }

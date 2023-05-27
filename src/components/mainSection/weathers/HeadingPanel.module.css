@@ -1,0 +1,39 @@
+.heading {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.heading.light {
+  background-color: var(--main-);
+}
+
+.time {
+  font-weight: bold;
+}
+
+.weather_icon {
+  width: 80px;
+  height: 80px;
+}
+
+.weather_main {
+  align-self: center;
+  font-size: 1.4rem;
+}
+
+.temperature {
+  font-size: 2rem;
+}
+
+.feel {
+  font-size: 1.2rem;
+}
+
+.dark {
+  color: var(--main-color-dark);
+}
+
+.light {
+  color: var(--main-color-light);
+}

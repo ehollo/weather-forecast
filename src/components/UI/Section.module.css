@@ -1,8 +1,14 @@
 .section {
-  max-width: 40rem;
   margin: 2rem auto;
-  background-color: #00cbdd;
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dark {
+  background-color: var(--main-section-color-dark);
+}
+
+.light {
+  background-color: var(--main-bg-color-light);
 }

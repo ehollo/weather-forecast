@@ -7,11 +7,26 @@
   color: beige;
 }
 
-.selected {
-  background-color: #01464d;
-  border-bottom: 1px solid beige;
+.item.dark {
+  background-color: var(--main-bg-color-dark);
+  color: var(--main-color-dark);
 }
 
-/* .item:hover {
-  background-color: #03b4c5;
-} */
+.item.light {
+  background-color: var(--main-chooser-color-light);
+  color: var(--main-color-light);
+}
+
+.dark.selected {
+  background-color: var(--main-selected-color-dark);
+  border-bottom: 1px solid var(--main-border-color-dark);
+}
+
+.light.selected {
+  background-color: var(--main-selected-color-light);
+  border-bottom: 1px solid var(--main-border-color-light);
+}
+
+.item:hover {
+  cursor: pointer;
+}

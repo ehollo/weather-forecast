@@ -1,0 +1,12 @@
+:root {
+  --main-bg-color-dark: #008793;
+  --main-color-dark: beige;
+  --main-section-color-dark: #01a3b2;
+  --main-border-color-dark: beige;
+  --main-selected-color-dark: #01464d;
+  --main-bg-color-light: #dffbfe;
+  --main-color-light: black;
+  --main-chooser-color-light: #95f9f9;
+  --main-border-color-light: #00363b;
+  --main-selected-color-light: #66e8f4;
+}

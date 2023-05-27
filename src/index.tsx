@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOMClient from "react-dom/client";
-import AppProvider from "./AppProvider";
+import Providers from "./Providers";
 
 const domContainer = document.querySelector("#root");
 const root = domContainer && ReactDOMClient.createRoot(domContainer);
-root && root.render(<AppProvider></AppProvider>);
+root && root.render(<Providers></Providers>);

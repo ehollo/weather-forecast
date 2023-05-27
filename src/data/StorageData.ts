@@ -22,7 +22,5 @@ export const getStorageData = (timeSlot: string): Weather[] => {
 };
 
 export const setStorageData = (data: Weather[], timeSlot: string) => {
-  //   if (isDailyWeather(timeSlot)) {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
-  //   }
 };
