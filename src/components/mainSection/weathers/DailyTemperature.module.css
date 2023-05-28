@@ -1,0 +1,22 @@
+.dailyTemperature {
+  padding: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.temperature {
+  font-size: 1.2rem;
+}
+
+.dark {
+  color: var(--main-color-dark);
+}
+
+.light {
+  color: var(--main-color-light);
+}
+
+.items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2rem;
+}

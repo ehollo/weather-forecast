@@ -2,35 +2,43 @@ import * as React from "react";
 import classes from "./HeadingPanel.module.css";
 import useClassName from "../../../hooks/useClassName";
 import { Box } from "@chakra-ui/react";
-import { Weather } from "../../../data/WeatherData";
 
 type HeadingPanelProps = {
-  data: Weather;
+  time: string;
+  weatherIcon?: string;
+  weatherDescription?: string;
+  temp?: string;
+  feelsLike?: string;
+  isDaily?: boolean;
 };
 
-const HeadingPanel = ({ data }: HeadingPanelProps) => {
+const HeadingPanel = ({
+  time,
+  weatherIcon,
+  weatherDescription,
+  temp,
+  feelsLike,
+  isDaily = false,
+}: HeadingPanelProps) => {
+  const dateOrTime = isDaily ? `Date: ${time}` : `Time: ${time} h`;
   return (
     <div className={useClassName(classes.heading, classes)}>
-      <div className={useClassName(classes.time, classes)}>
-        Time: {data.time} h
-      </div>
-      {data.weather_icon && (
+      <div className={useClassName(classes.time, classes)}>{dateOrTime}</div>
+      {weatherIcon && (
         <div className={useClassName(classes.weather_icon, classes)}>
-          <img src={data.weather_icon} alt="Icon of the actual weather" />
+          <img src={weatherIcon} alt="Icon of the actual weather" />
         </div>
       )}
-      {data.weather_main && (
-        <div className={useClassName(classes.weather_main, classes)}>
-          {data.weather_main}
+      {weatherDescription && (
+        <div className={useClassName(classes.description, classes)}>
+          {weatherDescription}
         </div>
       )}
       <Box>
-        <div className={useClassName(classes.temperature, classes)}>
-          {data.temp}
-        </div>
-        {data.feels_like && (
+        <div className={useClassName(classes.temperature, classes)}>{temp}</div>
+        {feelsLike && (
           <div className={useClassName(classes.feel, classes)}>
-            Feels like: {data.feels_like}
+            Feels like: {feelsLike}
           </div>
         )}
       </Box>

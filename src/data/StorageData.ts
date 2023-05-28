@@ -1,10 +1,10 @@
-import { isDailyWeather } from "./TimeSlots";
+import { isDailyTimeSlot } from "./TimeSlots";
 import { Weather } from "./WeatherData";
 
 const LOCAL_STORAGE_KEY = "DailyWeatherData";
 
 export const getStorageData = (timeSlot: string): Weather[] => {
-  if (isDailyWeather(timeSlot)) {
+  if (isDailyTimeSlot(timeSlot)) {
     const storedItem = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (storedItem) {
       const storedData: Weather[] = (JSON.parse(storedItem) as Weather[]) || [];
@@ -21,6 +21,6 @@ export const getStorageData = (timeSlot: string): Weather[] => {
   return [];
 };
 
-export const setStorageData = (data: Weather[], timeSlot: string) => {
+export const setStorageData = (data: Weather[]) => {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
 };

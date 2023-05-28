@@ -1,5 +1,5 @@
 export type WeatherDataResponse = {
-  current: CurrentWeather;
+  current: HourlyWeather;
   hourly: HourlyWeather[];
   daily: DailyWeather[];
 };
@@ -20,15 +20,10 @@ export type CommonWeather = {
       icon: string;
     }
   ];
-};
-
-export type CurrentWeather = CommonWeather & {
-  temp: number;
-  feels_like: number;
-  sunrise: number;
-  sunset: number;
-  rain?: { "1h": number };
-  snow?: { "1h": number };
+  sunrise?: number;
+  sunset?: number;
+  moonrise?: number;
+  moonset?: number;
 };
 
 export type HourlyWeather = CommonWeather & {
@@ -53,10 +48,6 @@ export type DailyWeather = CommonWeather & {
     eve: number;
     morn: number;
   };
-  sunrise: number;
-  sunset: number;
-  moonrise: number;
-  moonset: number;
   rain?: number;
   snow?: number;
 };

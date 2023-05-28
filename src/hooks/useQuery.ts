@@ -23,7 +23,7 @@ const useQuery = () => {
           const data = await response.json();
           handleData(data);
         } catch (err) {
-          setError(err.message || "Something went wrong!");
+          setError(err);
         }
       }
       setIsLoading(false);

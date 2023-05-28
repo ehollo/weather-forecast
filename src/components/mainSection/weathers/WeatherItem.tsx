@@ -9,14 +9,18 @@ type WeatherItemProps = {
 
 const WeatherItem = ({ label, value }: WeatherItemProps) => {
   return (
-    <div className={`${useClassName(classes.item, classes)}`}>
-      <span
-        className={`${useClassName(classes.label, classes)}`}
-      >{`${label}: `}</span>
-      <span className={`${useClassName(classes.value, classes)}`}>
-        {value ?? "-"}
-      </span>
-    </div>
+    <>
+      {value && (
+        <div className={`${useClassName(classes.item, classes)}`}>
+          <span
+            className={`${useClassName(classes.label, classes)}`}
+          >{`${label}: `}</span>
+          <span className={`${useClassName(classes.value, classes)}`}>
+            {value}
+          </span>
+        </div>
+      )}
+    </>
   );
 };
 

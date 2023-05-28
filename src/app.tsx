@@ -13,7 +13,7 @@ const App = () => {
         <Header />
         <div className={classes.sections}>
           <MainSection />
-          <SecondarySection />
+          {/* <SecondarySection /> */}
         </div>
       </div>
     </div>

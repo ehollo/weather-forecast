@@ -1,0 +1,28 @@
+.items {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+}
+
+.anItem {
+  display: flex;
+  justify-content: flex-start;
+}
+.label {
+  font-size: 1.1rem;
+}
+
+.value {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.dark {
+  color: var(--main-color-dark);
+  border-color: var(--main-border-color-dark);
+}
+
+.light {
+  color: var(--main-color-light);
+  border-color: var(--main-color-light);
+}

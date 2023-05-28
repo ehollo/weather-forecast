@@ -5,15 +5,16 @@ import TimeSlotChooser from "./timeSlotChooser/TimeSlotChooser";
 import useWeather from "../../hooks/useWeather";
 import {
   getCurrentTimeSlot,
-  isCurrentWeather,
-  isDailyWeather,
-  isHourlyWeather,
+  isCurrentTimeSlot,
+  isDailyTimeSlot,
+  isHourlyTimeSlot,
   validateTimeSlot,
 } from "../../data/TimeSlots";
 import Current from "./weathers/Current";
 import Hourly from "./weathers/Hourly";
 import Daily from "./weathers/Daily";
-import { Skeleton, Stack } from "@chakra-ui/react";
+import Loader from "./Loader";
+import ErrorMessage from "./ErrorMessage";
 
 const MainSection = () => {
   const { isLoading, timeSlot, error, weatherData, setTimeSlot } = useWeather(
@@ -29,22 +30,18 @@ const MainSection = () => {
       <div className={classes.container}>
         <TimeSlotChooser onClick={handleClick} />
         {isLoading ? (
-          <Stack>
-            <Skeleton height="30px" />
-            <Skeleton height="30px" />
-            <Skeleton height="30px" />
-            <Skeleton height="30px" />
-            <Skeleton height="30px" />
-          </Stack>
+          <Loader />
+        ) : error ? (
+          <ErrorMessage error={error.message} />
         ) : (
           <>
-            {weatherData && isCurrentWeather(timeSlot) && (
+            {weatherData && isCurrentTimeSlot(timeSlot) && (
               <Current currentData={weatherData.current}></Current>
             )}
-            {weatherData && isHourlyWeather(timeSlot) && (
+            {weatherData && isHourlyTimeSlot(timeSlot) && (
               <Hourly hourlyData={weatherData.hourly}></Hourly>
             )}
-            {weatherData && isDailyWeather(timeSlot) && (
+            {weatherData && isDailyTimeSlot(timeSlot) && (
               <Daily dailyData={weatherData.daily}></Daily>
             )}
           </>

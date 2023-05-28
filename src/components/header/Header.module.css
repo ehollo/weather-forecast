@@ -5,24 +5,9 @@
 }
 
 .header.dark {
-  background-color: var(--main-bg-color-dark);
   color: var(--main-color-dark);
 }
 
 .header.light {
-  background-color: var(--main-bg-color-light);
   color: var(--main-color-light);
-}
-
-.settings {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.logo {
-  padding: 0.5rem;
-  border: 0.25rem;
-  border-radius: 0.25rem;
-  margin: 0.5rem;
-  font-weight: bold;
 }

@@ -1,0 +1,6 @@
+.weatherChart {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2rem;
+  padding: 0.25rem;
+}

@@ -1,5 +1,5 @@
 import * as React from "react";
-import WeatherContext from "../context/WeatherContext";
+import WeatherContext, { Units } from "../context/WeatherContext";
 import { Weather, WeatherData } from "../data/WeatherData";
 import { weatherDataParser } from "../data/WeatherDataParser";
 import { setStorageData, getStorageData } from "../data/StorageData";
@@ -9,6 +9,7 @@ import useQuery from "./useQuery";
 
 const useWeather = (initialTimeSlot: string) => {
   const { units } = React.useContext(WeatherContext);
+  const [prevUnits, setPrevUnits] = React.useState(units);
   const [isDataStale, setIsDataStale] = React.useState(true);
   const [weatherData, setWeatherData] = React.useState<
     WeatherData | undefined
@@ -27,23 +28,32 @@ const useWeather = (initialTimeSlot: string) => {
   React.useEffect(() => {
     const handleData = (data: WeatherDataResponse) => {
       const wData: WeatherData = weatherDataParser(data, units);
-      setStorageData(wData.daily, timeSlot);
+      setStorageData(wData.daily);
       setWeatherData(wData);
     };
 
-    if (isDataStale && timerExpired && coordinates) {
-      const dailyData: Weather[] = getStorageData(timeSlot);
+    const isUnitsChanged = units != prevUnits;
+
+    if (((isDataStale && timerExpired) || isUnitsChanged) && coordinates) {
+      const dailyData: Weather[] = isUnitsChanged
+        ? []
+        : getStorageData(timeSlot);
+
       if (dailyData.length > 0) {
         weatherData && setWeatherData({ ...weatherData, daily: dailyData });
       } else {
         setIsDataStale(false);
         setTimerExpired(false);
-        sendRequest({ requestUrl: createRequest(coordinates), handleData });
+        sendRequest({
+          requestUrl: createRequest(coordinates, units),
+          handleData,
+        });
       }
     }
-  }, [isDataStale, timerExpired, coordinates, timeSlot, sendRequest]);
+    setPrevUnits(units);
+  }, [isDataStale, timerExpired, coordinates, units, timeSlot, sendRequest]);
 
-  const createRequest = (coordinates: LocationCoords) => {
+  const createRequest = (coordinates: LocationCoords, units: Units) => {
     const locationStr = `lat=${coordinates.lat}&lon=${coordinates.lon}`;
     const excludeStr = "&exclude=minutely,alerts";
     const API_key = "1cc2e654e0119e5e9aa46dac1cb59e42";
@@ -54,7 +64,7 @@ const useWeather = (initialTimeSlot: string) => {
 
   return {
     isLoading: isLoading || isLocationLoading,
-    error: `${locationError} ${error}`,
+    error: locationError ? locationError : error,
     weatherData,
     timeSlot,
     setTimeSlot: (newTimeSlot: string) => {

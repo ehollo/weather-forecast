@@ -1,0 +1,21 @@
+.content {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  padding: 0.25rem;
+}
+
+.planet {
+  display: flex;
+  align-items: center;
+}
+
+.sun {
+  width: 5rem;
+  padding: 1rem;
+}
+
+.moon {
+  width: 5rem;
+  padding: 1.2rem;
+}

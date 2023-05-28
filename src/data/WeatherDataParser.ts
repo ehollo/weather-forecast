@@ -1,11 +1,10 @@
 import { Units } from "../context/WeatherContext";
-import { isCurrentWeather, isHourlyWeather } from "./TimeSlots";
+import { isCurrentTimeSlot, isHourlyTimeSlot } from "./TimeSlots";
 import { Weather, WeatherData } from "./WeatherData";
 import {
   CommonWeather,
-  CurrentWeather,
-  DailyWeather,
   HourlyWeather,
+  DailyWeather,
   WeatherDataResponse,
 } from "./WeatherDataResponse";
 
@@ -14,7 +13,7 @@ export const weatherDataParser = (
   units: Units
 ): WeatherData => {
   const weatherData: WeatherData = { current: {}, hourly: [], daily: [] };
-  weatherData.current = currentDataParser(
+  weatherData.current = hourlyDataParser(
     weatherDataResp.current,
     "Current",
     units
@@ -36,30 +35,17 @@ export const weatherDataParser = (
 
   return weatherData;
 };
-const currentDataParser = (
-  data: CurrentWeather,
-  tSlot: string,
-  units: Units
-): Weather => {
-  const commonWeather = hourlyDataParser(data, tSlot, units);
-  const weather: Weather = {
-    ...commonWeather,
-    sunrise: data.sunrise ? `${data.sunrise}` : "",
-    sunset: data.sunset ? `${data.sunset}` : "",
-  };
-  return weather;
-};
 
 const hourlyDataParser = (
-  data: CurrentWeather | HourlyWeather,
+  data: HourlyWeather,
   tSlot: string,
   units: Units
 ): Weather => {
   const commonWeather = dataParser(data, tSlot, units);
   const weather: Weather = {
     ...commonWeather,
-    temp: data.temp ? `${data.temp}°` : "",
-    feels_like: data.feels_like ? `${data.feels_like}°` : "",
+    temp: data.temp ? `${Math.round(data.temp)}°` : "",
+    feels_like: data.feels_like ? `${Math.round(data.feels_like)}°` : "",
     rain: data.rain ? `${data.rain["1h"]}mm` : "",
     snow: data.snow ? `${data.snow["1h"]}mm` : "",
   };
@@ -74,10 +60,28 @@ const dailyDataParser = (
   const commonWeather = dataParser(data, tSlot, units);
   const weather: Weather = {
     ...commonWeather,
-    temp: data.temp ? `${data.temp.day}°` : "",
-    feels_like: data.feels_like ? `${data.feels_like.day}°` : "",
+    temp: data.temp ? `${Math.round(data.temp.day)}°` : "",
+    feels_like: data.feels_like ? `${Math.round(data.feels_like.day)}°` : "",
     rain: data.rain ? `${data.rain}mm` : "",
     snow: data.snow ? `${data.snow}mm` : "",
+    temp_day: data.temp.day ? `${Math.round(data.temp.day)}°` : "",
+    temp_min: data.temp.min ? `${Math.round(data.temp.min)}°` : "",
+    temp_max: data.temp.max ? `${Math.round(data.temp.max)}°` : "",
+    temp_night: data.temp.night ? `${Math.round(data.temp.night)}°` : "",
+    temp_eve: data.temp.eve ? `${Math.round(data.temp.eve)}°` : "",
+    temp_morn: data.temp.morn ? `${Math.round(data.temp.morn)}°` : "",
+    feels_like_day: data.feels_like.day
+      ? `${Math.round(data.feels_like.day)}°`
+      : "",
+    feels_like_night: data.feels_like.night
+      ? `${Math.round(data.feels_like.night)}°`
+      : "",
+    feels_like_eve: data.feels_like.eve
+      ? `${Math.round(data.feels_like.eve)}°`
+      : "",
+    feels_like_morn: data.feels_like.morn
+      ? `${Math.round(data.feels_like.morn)}°`
+      : "",
   };
   return weather;
 };
@@ -91,31 +95,47 @@ const dataParser = (
     time: getTime(data.dt, tSlot),
     humidity: data.humidity ? `${data.humidity}%` : "",
     clouds: data.clouds ? `${data.clouds}%` : "",
-    visibility:
-      data.visibility && data.visibility < 1000 ? `${data.visibility}m` : "",
+    visibility: data.visibility ? getVisibility(data.visibility, units) : "",
     wind: getWind(data.wind_speed, data.wind_deg, units),
     uvi: data.uvi ? `${data.uvi} of 10` : "",
     weather_main: data.weather.length > 0 ? data.weather[0].main : "",
     weather_description:
-      data.weather.length > 0 ? data.weather[0].description : "",
+      data.weather.length > 0 ? capitalize(data.weather[0].description) : "",
     weather_icon:
       data.weather.length > 0
         ? `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
         : "",
+    sunrise: data.sunrise ? `${getTime(data.sunrise)}` : "",
+    sunset: data.sunset ? `${getTime(data.sunset)}` : "",
+    moonrise: data.moonrise ? `${getTime(data.moonrise)}` : "",
+    moonset: data.moonset ? `${getTime(data.moonset)}` : "",
   };
   return weather;
 };
 
-const getTime = (timeStamp: number, tSlot: string): string => {
+const getTime = (timeStamp: number, tSlot: string = "Current"): string => {
   const date = new Date(timeStamp * 1000);
-  if (isCurrentWeather(tSlot)) {
+  if (isCurrentTimeSlot(tSlot)) {
     const time = `${date.getHours()}:${date.getMinutes()}`;
     return time;
-  } else if (isHourlyWeather(tSlot)) {
+  } else if (isHourlyTimeSlot(tSlot)) {
     return `${date.getHours()}`;
   } else {
     return `${date.getMonth() + 1}.${date.getDate()}`;
   }
+};
+
+const getVisibility = (visibility: number, units: Units): string => {
+  return units === "metric"
+    ? visibility > 1000
+      ? `${(visibility / 1000).toFixed(1)}km`
+      : `${visibility}m`
+    : `${(visibility * 0.00062137).toFixed(2)}miles`;
+};
+
+const capitalize = (description: string): string => {
+  const firstChar = description[0].toUpperCase();
+  return `${firstChar}${description.slice(1)}`;
 };
 
 const getWind = (
@@ -134,62 +154,26 @@ const getWindSpeed = (wind_speed: number, units: Units): string => {
     : `${wind_speed.toFixed(1)} miles/h`;
 };
 
+const WindStr = [
+  "N",
+  "NNE",
+  "NE",
+  "ENE",
+  "E",
+  "ESE",
+  "SE",
+  "SSE",
+  "S",
+  "SSW",
+  "SW",
+  "WSW",
+  "W",
+  "WNW",
+  "NW",
+  "NNW",
+];
+
 const getWindDeg = (wind_deg: number): string => {
-  if (wind_deg >= 0 && wind_deg < 22.5) {
-    return "N";
-  } else if (wind_deg >= 22.5 && wind_deg < 45) {
-    return "NNE";
-  } else if (wind_deg >= 45 && wind_deg < 67.5) {
-    return "NE";
-  } else if (wind_deg >= 67.5 && wind_deg < 90) {
-    return "ENE";
-  } else if (wind_deg >= 90 && wind_deg < 112.5) {
-    return "E";
-  } else if (wind_deg >= 112.5 && wind_deg < 135) {
-    return "ESE";
-  } else if (wind_deg >= 135 && wind_deg < 157.5) {
-    return "SE";
-  } else if (wind_deg >= 157.5 && wind_deg < 180) {
-    return "SSE";
-  } else if (wind_deg >= 180 && wind_deg < 202.5) {
-    return "S";
-  } else if (wind_deg >= 202.5 && wind_deg < 225) {
-    return "SSW";
-  } else if (wind_deg >= 225 && wind_deg < 247.5) {
-    return "SW";
-  } else if (wind_deg >= 247.5 && wind_deg < 270) {
-    return "WSW";
-  } else if (wind_deg >= 270 && wind_deg < 292.5) {
-    return "W";
-  } else if (wind_deg >= 292.5 && wind_deg < 315) {
-    return "WNW";
-  } else if (wind_deg >= 315 && wind_deg < 337.5) {
-    return "NW";
-  } else if (wind_deg >= 337.5 && wind_deg < 360) {
-    return "NNW";
-  }
-  return "";
-};
-const getWeatherData = (
-  weatherData: {
-    id: number;
-    main: string;
-    description: string;
-    icon: string;
-  }[]
-): {
-  id: string;
-  main: string;
-  description: string;
-  icon: string;
-} | null => {
-  const data = weatherData.length > 0 ? weatherData[0] : null;
-  return (
-    data && {
-      id: `${data.id}`,
-      main: data.main,
-      description: data.description,
-      icon: `https://openweathermap.org/img/wn/${data.icon}@2x.png`,
-    }
-  );
+  const windVal = Math.floor(wind_deg / 22.5);
+  return windVal >= 0 && windVal < 16 ? WindStr[windVal] : "";
 };

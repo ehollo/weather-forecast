@@ -18,7 +18,7 @@ type LocationDataType = {
 
 const useLocation = () => {
   const [isLocationLoading, setLocationLoading] = React.useState(false);
-  const [locationError, setLocationError] = React.useState("");
+  const [locationError, setLocationError] = React.useState<Error | undefined>();
   const { error, sendRequest } = useQuery();
   const [coordinates, setCoordinates] = React.useState<
     LocationCoords | undefined
@@ -48,11 +48,13 @@ const useLocation = () => {
     };
 
     const handleError = () => {
-      setLocationError("Unable to retrieve your location! ");
+      setLocationError(new Error("Unable to retrieve your location! "));
     };
 
     if (!navigator.geolocation) {
-      setLocationError("Geolocation is not supported by your browser! ");
+      setLocationError(
+        new Error("Geolocation is not supported by your browser! ")
+      );
     } else {
       setLocationLoading(true);
       navigator.geolocation.getCurrentPosition(handleSuccess, handleError);
@@ -70,7 +72,7 @@ const useLocation = () => {
     coordinates,
     location,
     isLocationLoading,
-    locationError: `${locationError}${error}`,
+    locationError: locationError ? locationError : error,
   };
 };
 
