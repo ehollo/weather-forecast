@@ -2,7 +2,10 @@ import * as React from "react";
 import WeatherContext, { Units } from "../context/WeatherContext";
 import { Weather, WeatherData } from "../data/WeatherData";
 import { weatherDataParser } from "../data/WeatherDataParser";
-import { setStorageData, getStorageData } from "../data/StorageData";
+import {
+  setWeatherStorageData,
+  getWeatherStorageData,
+} from "../data/StorageData";
 import useLocation, { LocationCoords } from "./useLocation";
 import { WeatherDataResponse } from "../data/WeatherDataResponse";
 import useQuery from "./useQuery";
@@ -28,7 +31,7 @@ const useWeather = (initialTimeSlot: string) => {
   React.useEffect(() => {
     const handleData = (data: WeatherDataResponse) => {
       const wData: WeatherData = weatherDataParser(data, units);
-      setStorageData(wData.daily);
+      setWeatherStorageData(wData.daily);
       setWeatherData(wData);
     };
 
@@ -37,7 +40,7 @@ const useWeather = (initialTimeSlot: string) => {
     if (((isDataStale && timerExpired) || isUnitsChanged) && coordinates) {
       const dailyData: Weather[] = isUnitsChanged
         ? []
-        : getStorageData(timeSlot);
+        : getWeatherStorageData(timeSlot);
 
       if (dailyData.length > 0) {
         weatherData && setWeatherData({ ...weatherData, daily: dailyData });

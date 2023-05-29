@@ -3,6 +3,12 @@ import classes from "./Settings.module.css";
 import * as React from "react";
 import useClassName from "../../hooks/useClassName";
 import WeatherContext, { Units } from "../../context/WeatherContext";
+import {
+  getThemeSetting,
+  getUnitsSetting,
+  setThemeSetting,
+  setUnitsSetting,
+} from "../../data/StorageData";
 
 const Settings = () => {
   const { isDarkMode, units, setIsDarkMode, setUnits } =
@@ -11,54 +17,59 @@ const Settings = () => {
   const handleColorModeChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setIsDarkMode(event.currentTarget.value === "dark");
+    const isDarkMode = event.currentTarget.value === "dark";
+    setIsDarkMode(isDarkMode);
+    setThemeSetting(isDarkMode);
   };
 
   const handleUnitsChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setUnits(event.currentTarget.value as Units);
+    setUnitsSetting(event.currentTarget.value as Units);
   };
 
   const optionStyle = {
     backgroundColor: isDarkMode ? "#008793" : "#95f9f9",
   };
+  const theme = getThemeSetting()! || isDarkMode;
+  const theUnits = getUnitsSetting() || units;
 
   return (
     <div className={useClassName(classes.settings, classes)}>
       <Box w="140px" margin="1rem">
         <Select
-          bg={isDarkMode ? "#008793" : "#95f9f9"}
-          borderColor={isDarkMode ? "#004d7a" : "#00363b"}
-          color={isDarkMode ? "beige" : "black"}
+          bg={theme ? "#008793" : "#95f9f9"}
+          borderColor={theme ? "#004d7a" : "#00363b"}
+          color={theme ? "beige" : "black"}
           variant="outline"
           onChange={handleColorModeChange}
         >
-          <option value="dark" style={optionStyle} selected={isDarkMode}>
+          <option value="dark" style={optionStyle} selected={theme}>
             Dark theme
           </option>
-          <option value="light" style={optionStyle} selected={!isDarkMode}>
+          <option value="light" style={optionStyle} selected={!theme}>
             Light theme
           </option>
         </Select>
       </Box>
       <Box w="140px" margin="1rem">
         <Select
-          bg={isDarkMode ? "#008793" : "#95f9f9"}
-          borderColor={isDarkMode ? "#004d7a" : "#00363b"}
-          color={isDarkMode ? "beige" : "black"}
+          bg={theme ? "#008793" : "#95f9f9"}
+          borderColor={theme ? "#004d7a" : "#00363b"}
+          color={theme ? "beige" : "black"}
           variant="outline"
           onChange={handleUnitsChange}
         >
           <option
             value="metric"
             style={optionStyle}
-            selected={units === "metric"}
+            selected={theUnits === "metric"}
           >
             Metric (°C)
           </option>
           <option
             value="imperial"
             style={optionStyle}
-            selected={units === "imperial"}
+            selected={theUnits === "imperial"}
           >
             Imperial (°F)
           </option>
