@@ -1,6 +1,6 @@
 import * as React from "react";
-import WeatherItem from "./WeatherItem";
 import { Weather } from "../../../data/WeatherData";
+import LabeledItem from "../../UI/LabeledItem";
 
 type WeatherItemChartProps = {
   data: Weather;
@@ -9,13 +9,13 @@ type WeatherItemChartProps = {
 const WeatherItemChart = ({ data }: WeatherItemChartProps) => {
   return (
     <>
-      <WeatherItem label="Rain" value={data.rain} />
-      <WeatherItem label="Snow" value={data.snow} />
-      <WeatherItem label="Clouds" value={data.clouds} />
-      <WeatherItem label="Humidity" value={data.humidity} />
-      <WeatherItem label="Visibility" value={data.visibility} />
-      <WeatherItem label="UV Index" value={data.uvi} />
-      <WeatherItem label="Wind" value={data.wind} />
+      <LabeledItem label="Rain" value={data.rain} />
+      <LabeledItem label="Snow" value={data.snow} />
+      <LabeledItem label="Clouds" value={data.clouds} />
+      <LabeledItem label="Humidity" value={data.humidity} />
+      <LabeledItem label="Visibility" value={data.visibility} />
+      <LabeledItem label="UV Index" value={data.uvi} />
+      <LabeledItem label="Wind" value={data.wind} />
     </>
   );
 };

@@ -1,20 +1,15 @@
 import * as React from "react";
-import classes from "./TemperatureItem.module.css";
-import useClassName from "../../../hooks/useClassName";
+import classes from "./PairedItems.module.css";
+import useClassName from "../../hooks/useClassName";
 
-type TemperatureItemProps = {
+type PairedItemsProps = {
   label1: string;
   value1?: string;
   label2: string;
   value2?: string;
 };
 
-const TemperatureItem = ({
-  label1,
-  value1,
-  label2,
-  value2,
-}: TemperatureItemProps) => {
+const PairedItems = ({ label1, value1, label2, value2 }: PairedItemsProps) => {
   return (
     <>
       {value1 && value2 && (
@@ -41,4 +36,4 @@ const TemperatureItem = ({
   );
 };
 
-export default TemperatureItem;
+export default PairedItems;

@@ -18,19 +18,23 @@ export const weatherDataParser = (
     "Current",
     units
   );
-  for (let i: number = 0; i < 12; i++) {
-    weatherData.hourly[i] = hourlyDataParser(
-      weatherDataResp.hourly[i],
-      "Hourly",
-      units
-    );
+  if (weatherDataResp.hourly) {
+    for (let i: number = 0; i < 12; i++) {
+      weatherData.hourly[i] = hourlyDataParser(
+        weatherDataResp.hourly[i],
+        "Hourly",
+        units
+      );
+    }
   }
-  for (let i: number = 0; i < 6; i++) {
-    weatherData.daily[i] = dailyDataParser(
-      weatherDataResp.daily[i],
-      "Daily",
-      units
-    );
+  if (weatherData.daily) {
+    for (let i: number = 0; i < 6; i++) {
+      weatherData.daily[i] = dailyDataParser(
+        weatherDataResp.daily[i],
+        "Daily",
+        units
+      );
+    }
   }
 
   return weatherData;

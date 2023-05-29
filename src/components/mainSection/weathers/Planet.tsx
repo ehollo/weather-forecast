@@ -1,7 +1,7 @@
 import * as React from "react";
 import classes from "./Planet.module.css";
 import { Box } from "@chakra-ui/react";
-import WeatherItem from "./WeatherItem";
+import LabeledItem from "../../UI/LabeledItem";
 
 type PlanetProps = {
   sunrise?: string;
@@ -32,8 +32,8 @@ const Planet = ({ sunrise, sunset, moonrise, moonset }: PlanetProps) => {
         <div className={classes.planet}>
           {sunImg}
           <Box w="13rem">
-            <WeatherItem label="Sun rise" value={sunrise} />
-            <WeatherItem label="Sun set" value={sunset} />
+            <LabeledItem label="Sun rise" value={sunrise} />
+            <LabeledItem label="Sun set" value={sunset} />
           </Box>
         </div>
       )}
@@ -41,8 +41,8 @@ const Planet = ({ sunrise, sunset, moonrise, moonset }: PlanetProps) => {
         <div className={classes.planet}>
           {moonImg}
           <Box w="13rem">
-            <WeatherItem label="Moon rise" value={moonrise} />
-            <WeatherItem label="Moon set" value={moonset} />
+            <LabeledItem label="Moon rise" value={moonrise} />
+            <LabeledItem label="Moon set" value={moonset} />
           </Box>
         </div>
       )}

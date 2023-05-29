@@ -1,3 +1,13 @@
 .container {
-  display: flex;
+  width: 35rem;
+}
+
+.dark {
+  color: var(--main-color-dark);
+  /* border-color: var(--main-border-color-dark); */
+}
+
+.light {
+  color: var(--main-color-light);
+  /* border-color: var(--main-color-light); */
 }

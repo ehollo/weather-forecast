@@ -1,13 +1,13 @@
 import * as React from "react";
-import classes from "./WeatherItem.module.css";
-import useClassName from "../../../hooks/useClassName";
+import classes from "./LabeledItem.module.css";
+import useClassName from "../../hooks/useClassName";
 
-type WeatherItemProps = {
+type LabeledItemProps = {
   label: string;
   value?: string;
 };
 
-const WeatherItem = ({ label, value }: WeatherItemProps) => {
+const LabeledItem = ({ label, value }: LabeledItemProps) => {
   return (
     <>
       {value && (
@@ -24,4 +24,4 @@ const WeatherItem = ({ label, value }: WeatherItemProps) => {
   );
 };
 
-export default WeatherItem;
+export default LabeledItem;
