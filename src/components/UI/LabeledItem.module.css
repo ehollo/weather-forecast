@@ -22,3 +22,9 @@
   color: var(--main-color-light);
   border-color: var(--main-color-light);
 }
+
+@media (max-width: 36rem) {
+  .item {
+    width: 100%;
+  }
+}

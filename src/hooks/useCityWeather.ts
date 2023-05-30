@@ -27,10 +27,13 @@ const useCityWeather = (coordinates: LocationCoords) => {
     };
 
     setTimerExpired(false);
-    sendRequest({
-      requestUrl: createRequest(coordinates, units),
-      handleData,
-    });
+    if (timerExpired) {
+      setTimerExpired(false);
+      sendRequest({
+        requestUrl: createRequest(coordinates, units),
+        handleData,
+      });
+    }
   }, [timerExpired, units, sendRequest]);
 
   const createRequest = (coordinates: LocationCoords, units: Units) => {

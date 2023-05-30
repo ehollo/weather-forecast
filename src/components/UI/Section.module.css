@@ -12,3 +12,10 @@
 .light {
   background-color: var(--main-bg-color-light);
 }
+
+@media (max-width: 36rem) {
+  .section {
+    width: 100%;
+    margin: 2rem, 0rem;
+  }
+}
