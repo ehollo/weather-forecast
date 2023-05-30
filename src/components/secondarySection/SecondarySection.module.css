@@ -1,13 +1,17 @@
 .container {
-  width: 35rem;
+  width: 36rem;
+}
+
+.city {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 1rem;
 }
 
 .dark {
   color: var(--main-color-dark);
-  /* border-color: var(--main-border-color-dark); */
 }
 
 .light {
   color: var(--main-color-light);
-  /* border-color: var(--main-color-light); */
 }

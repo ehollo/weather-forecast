@@ -8,7 +8,7 @@ import ErrorMessage from "../mainSection/ErrorMessage";
 import Loader from "../mainSection/Loader";
 import Current from "../mainSection/weathers/Current";
 import useClassName from "../../hooks/useClassName";
-import StyledInput from "../UI/StyledInput";
+import SliderInput from "../UI/SliderInput";
 
 type Response = {
   isLoading: boolean;
@@ -16,25 +16,32 @@ type Response = {
   weatherData?: WeatherData;
 };
 
+const DEFAULT_TIMER = 10000;
 const SecondarySection = () => {
-  const [timer, setTimer] = React.useState(10000);
+  const [timer, setTimer] = React.useState(DEFAULT_TIMER);
   const [cityIndex, setCityIndex] = React.useState(0);
   const response: Response[] = Cities.map((city, index) =>
     useCityWeather(CityLocations.get(Cities[index])!)
   );
 
   React.useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       setCityIndex((prevIndex) => (prevIndex + 1) % 6);
     }, timer);
+    return () => clearInterval(interval);
   }, [timer]);
 
   return (
     <Section>
       <div className={`${useClassName(classes.container, classes)}`}>
-        {Cities[cityIndex]}
+        <SliderInput
+          id="CycleInterval"
+          label="Set time interval for cycling city weather:"
+          defaultValue={DEFAULT_TIMER / 2000}
+          onChange={(value) => setTimer(value * 2000)}
+        />
+        <div className={classes.city}>{Cities[cityIndex]}</div>
         <div className={classes.input}>
-          {}
           {response[cityIndex].isLoading ? (
             <Loader />
           ) : response[cityIndex].error ? (
@@ -49,10 +56,6 @@ const SecondarySection = () => {
             </>
           )}
         </div>
-        <StyledInput
-          placeHolder={"Add time interval in seconds for cycle city weather"}
-          onChange={(value) => setTimer(value * 1000)}
-        />
       </div>
     </Section>
   );
