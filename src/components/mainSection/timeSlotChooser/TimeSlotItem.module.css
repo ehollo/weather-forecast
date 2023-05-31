@@ -30,9 +30,3 @@
 .item:hover {
   cursor: pointer;
 }
-
-@media (max-width: 36rem) {
-  .item {
-    width: auto;
-  }
-}

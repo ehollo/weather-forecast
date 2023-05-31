@@ -42,17 +42,27 @@ const Settings = () => {
           color={theme ? "beige" : "black"}
           variant="outline"
           onChange={handleColorModeChange}
+          value={theme ? "dark" : "light"}
         >
-          <option value="dark" style={optionStyle} selected={theme}>
+          <option
+            value="dark"
+            style={optionStyle}
+            //   selected={theme}
+          >
             Dark theme
           </option>
-          <option value="light" style={optionStyle} selected={!theme}>
+          <option
+            value="light"
+            style={optionStyle}
+            //   selected={!theme}
+          >
             Light theme
           </option>
         </Select>
       </Box>
       <Box w="140px" margin="1rem">
         <Select
+          value={theUnits}
           bg={theme ? "#008793" : "#95f9f9"}
           borderColor={theme ? "#004d7a" : "#00363b"}
           color={theme ? "beige" : "black"}
@@ -62,14 +72,14 @@ const Settings = () => {
           <option
             value="metric"
             style={optionStyle}
-            selected={theUnits === "metric"}
+            // selected={theUnits === "metric"}
           >
             Metric (°C)
           </option>
           <option
             value="imperial"
             style={optionStyle}
-            selected={theUnits === "imperial"}
+            // selected={theUnits === "imperial"}
           >
             Imperial (°F)
           </option>

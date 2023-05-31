@@ -13,8 +13,8 @@ import {
 import Current from "./weathers/Current";
 import Hourly from "./weathers/Hourly";
 import Daily from "./weathers/Daily";
-import Loader from "./Loader";
-import ErrorMessage from "./ErrorMessage";
+import Loader from "../UI/Loader";
+import ErrorMessage from "../UI/ErrorMessage";
 
 const MainSection = () => {
   const { isLoading, timeSlot, error, weatherData, setTimeSlot } = useWeather(

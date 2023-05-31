@@ -8,6 +8,7 @@ import useQuery from "./useQuery";
 
 const useCityWeather = (coordinates: LocationCoords) => {
   const { units } = React.useContext(WeatherContext);
+  const [prevUnits, setPrevUnits] = React.useState(units);
   const [weatherData, setWeatherData] = React.useState<
     WeatherData | undefined
   >();
@@ -26,14 +27,16 @@ const useCityWeather = (coordinates: LocationCoords) => {
       setWeatherData(wData);
     };
 
+    const isUnitsChanged = units != prevUnits;
     setTimerExpired(false);
-    if (timerExpired) {
+    if (timerExpired || isUnitsChanged) {
       setTimerExpired(false);
       sendRequest({
         requestUrl: createRequest(coordinates, units),
         handleData,
       });
     }
+    setPrevUnits(units);
   }, [timerExpired, units, sendRequest]);
 
   const createRequest = (coordinates: LocationCoords, units: Units) => {

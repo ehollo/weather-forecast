@@ -2,12 +2,6 @@
   width: 40rem;
 }
 
-.city {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-top: 1rem;
-}
-
 .dark {
   color: var(--main-color-dark);
 }

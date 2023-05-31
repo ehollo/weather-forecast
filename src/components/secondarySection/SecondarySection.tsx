@@ -1,16 +1,13 @@
 import * as React from "react";
 import classes from "./SecondarySection.module.css";
 import Section from "../UI/Section";
-import { Cities, CityLocations } from "../../data/CityLocations";
-import useCityWeather from "../../hooks/useCityWeather";
+import { Cities } from "../../data/CityLocations";
 import { WeatherData } from "../../data/WeatherData";
-import ErrorMessage from "../mainSection/ErrorMessage";
-import Loader from "../mainSection/Loader";
-import Current from "../mainSection/weathers/Current";
 import useClassName from "../../hooks/useClassName";
 import SliderInput from "../UI/SliderInput";
+import CityWeather from "./CityWeather";
 
-type Response = {
+export type WeatherResponse = {
   isLoading: boolean;
   error: any;
   weatherData?: WeatherData;
@@ -20,9 +17,6 @@ const DEFAULT_TIMER = 10000;
 const SecondarySection = () => {
   const [timer, setTimer] = React.useState(DEFAULT_TIMER);
   const [cityIndex, setCityIndex] = React.useState(0);
-  const response: Response[] = Cities.map((city, index) =>
-    useCityWeather(CityLocations.get(Cities[index])!)
-  );
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -40,22 +34,7 @@ const SecondarySection = () => {
           defaultValue={DEFAULT_TIMER / 2000}
           onChange={(value) => setTimer(value * 2000)}
         />
-        <div className={classes.city}>{Cities[cityIndex]}</div>
-        <div className={classes.input}>
-          {response[cityIndex].isLoading ? (
-            <Loader />
-          ) : response[cityIndex].error ? (
-            <ErrorMessage error={response[cityIndex].error.message} />
-          ) : (
-            <>
-              {response[cityIndex].weatherData && (
-                <Current
-                  currentData={response[cityIndex].weatherData!.current}
-                ></Current>
-              )}
-            </>
-          )}
-        </div>
+        <CityWeather cityIndex={cityIndex} />
       </div>
     </Section>
   );
